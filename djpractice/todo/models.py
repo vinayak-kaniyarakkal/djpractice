@@ -26,9 +26,9 @@ class Task(BaseContent):
     name = models.CharField(max_length=100)
     description = models.TextField()
     state = models.PositiveIntegerField(choices=STATE_CHOICES,
-                                        default=2)
+                                        default=0)
     priority =  models.PositiveIntegerField(choices=PRIORITY_CHOICES,
-                                            default=2)
+                                            default=1)
     due_date = models.DateTimeField(blank=True, null=True)
 
     def __unicode__(self):
