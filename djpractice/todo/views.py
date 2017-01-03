@@ -1,7 +1,5 @@
-from django.shortcuts import render
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.utils.decorators import method_decorator
 from .models import Task
 from django.http import HttpResponseRedirect
 
@@ -9,10 +7,8 @@ from django.http import HttpResponseRedirect
 class Manage(object):
 
     model = Task
-    # @method_decorator(super_user)
-    def dispatch(self, *args, **kwargs):
-        # Make sure that superuser is logged in
-        return super(Manage, self).dispatch(*args, **kwargs)
+    fields = ['name', 'due_date', 'description', 'state', 'priority']
+    success_url = "/"
 
 
 class TaskList(Manage, ListView):
@@ -20,11 +16,12 @@ class TaskList(Manage, ListView):
 
 
 class TaskAdd(Manage,  CreateView):
-    fields = ['name', 'due_date', 'description', 'state', 'priority']
-    # template_name = 'manage/add.html'
+    pass
 
-    def get_success_url(self):
-        return "/close/?msg=%s added successfully." %(self.kwargs['model'].capitalize())
+
+class TaskUpdate(Manage, UpdateView):
+    pass
+
 
 class Active(Manage, DeleteView):
 

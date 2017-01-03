@@ -13,18 +13,27 @@
             <thead>
               <tr>
 		<th>Name</th>
+		<th>Warnings</th>
 		<th>Due Date</th>
 		<th>Priority</th>
 		<th>State</th>
+		<th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {% for obj in object_list %}
               <tr>
 		<td>{{ obj.name }}</td>
+		<td> <span class="{{ obj.danger_status }} label-{% if obj.danger_status == 0 %}foo{% elif obj.danger_status == 1 %}info{% elif obj.danger_status == 2 %}danger{% endif %} label label-default">{% if obj.danger_status == 0 %}OK{% elif obj.danger_status == 1 %}Overdue{% elif obj.danger_status == 2 %}Overdue and High Priority{% endif %}</span></td>
 		<td>{{ obj.due_date }}</td>
-		<td>{{ obj.get_priority_display }}</td>
-		<td>{{ obj.get_state_display }}</td>
+		<td> <span class="{{ obj.priority }} label-{% if obj.priority == 0 %}foo{% elif obj.priority == 1 %}info{% elif obj.priority == 2 %}danger{% endif %} label label-default">{{ obj.get_priority_display }}</span></td>
+		<td><span class="label-{% if obj.state == 2 %}success{% elif obj.state == 1 %}info{% elif obj.state == 0 %}danger{% endif %} label label-default">{{ obj.get_state_display }}</span></td>
+		<td>
+		  <a href="/edit/{{obj.id}}/" class="btn fancybox btn-xs btn-info">
+                    <i class="glyphicon glyphicon-edit icon-white"></i>
+                    Edit
+                  </a>
+		</td>
               </tr>
 	      {% endfor %}
             </tbody>

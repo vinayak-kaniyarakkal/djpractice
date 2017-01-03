@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 from django.db import models
+import datetime
 
 
 class BaseContent(models.Model):
@@ -27,9 +28,21 @@ class Task(BaseContent):
     description = models.TextField()
     state = models.PositiveIntegerField(choices=STATE_CHOICES,
                                         default=0)
-    priority =  models.PositiveIntegerField(choices=PRIORITY_CHOICES,
-                                            default=1)
-    due_date = models.DateTimeField(blank=True, null=True)
+    priority = models.PositiveIntegerField(choices=PRIORITY_CHOICES,
+                                           default=1)
+    due_date = models.DateField(blank=True, null=True)
 
     def __unicode__(self):
         return self.name
+
+    def danger_status(self):
+        if not self.due_date:
+            return 0
+        elif all([self.priority == 2,
+                  self.state != 2,
+                  self.due_date < datetime.date.today()]):
+            return 2
+        elif all([self.state != 2,
+                  self.due_date < datetime.date.today()]):
+            return 1
+        return 0
