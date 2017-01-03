@@ -1,0 +1,1 @@
+web: python djpractice/manage.py runserver

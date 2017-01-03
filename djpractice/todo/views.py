@@ -20,7 +20,7 @@ class TaskList(Manage, ListView):
 
 
 class TaskAdd(Manage,  CreateView):
-    fields = ['name']
+    fields = ['name', 'due_date', 'description', 'state', 'priority']
     # template_name = 'manage/add.html'
 
     def get_success_url(self):
