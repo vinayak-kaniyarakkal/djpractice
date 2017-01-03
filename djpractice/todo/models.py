@@ -24,6 +24,8 @@ class Task(BaseContent):
     STATE_CHOICES = ((0, 'ToDo'), (1, 'Doing'), (2, 'Done'))
     PRIORITY_CHOICES = ((0, 'Low'), (1, 'Medium'), (2, 'High'))
 
+    owner = models.ForeignKey('auth.User')
+
     name = models.CharField(max_length=100)
     description = models.TextField()
     state = models.PositiveIntegerField(choices=STATE_CHOICES,

@@ -9,7 +9,7 @@ class Authenticate(MiddlewareMixin):
 
         if request.path == '/logout/':
             logout(request)
-            return HttpResponseRedirect('/manage/')
+            return HttpResponseRedirect('/')
 
         elif request.path.split('/')[1] in ['admin', 'css', 'static']:
             return None

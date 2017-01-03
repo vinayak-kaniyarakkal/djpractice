@@ -7,7 +7,18 @@
 	<div class="box-header well" data-original-title="">
           <h2><i class="glyphicon"></i>Tasks</h2>
 	</div>
-        <div class="box-content">
+
+	<div class="alert alert-info">
+	  <form style="text-align: center;">
+	    <label for="id_start">Start Date:</label>
+	    <input id="id_start" name="start" type="text" class="datepicker" value="{{ start|default_if_none:"&nbsp;" }}">
+	    <label for="id_end">End Date:</label>
+	    <input id="id_end" name="end" type="text" class="datepicker" value="{{ end|default_if_none:"&nbsp;" }}">
+	    <button class="btn btn-inverse btn-default btn-sm">Submit</button>
+	  </form>
+	</div>
+
+	<div class="box-content">
           {% if object_list %}
           <table class="table table-striped table-bordered bootstrap-datatable datatable responsive">
             <thead>
@@ -48,4 +59,30 @@
     </div>
   </div>
 </div>
+<script>
+  $(function() {
+      $('.datepicker').datepicker({
+	  changeYear: true,
+	  dateFormat: 'yy-mm-dd'
+      })
+      $('#id_start').change(function() {
+	  date = $(this).val();
+	  $('#id_end').datepicker('destroy')
+	  $('#id_end').datepicker({
+	      minDate: date,
+	      changeYear: true,
+	      dateFormat: 'yy-mm-dd'
+	  })
+      })
+      $('#id_end').change(function() {
+	  date = $(this).val();
+	  $('#id_start').datepicker('destroy')
+	  $('#id_start').datepicker({
+	      maxDate: date,
+	      changeYear: true,
+	      dateFormat: 'yy-mm-dd'
+	  })
+      })
+  })
+</script>
 {% endblock %}
